@@ -1,3 +1,3 @@
 #!/bin/bash
 
-near deploy --wasmFile res/dummy.wasm --initFunction "new" --initArgs '' --accountId $1.testnet
+near deploy --wasmFile res/no_std_test.wasm --initFunction "new" --initArgs '' --accountId $1.testnet

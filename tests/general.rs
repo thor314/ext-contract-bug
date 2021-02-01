@@ -14,16 +14,16 @@ use near_sdk_sim::{
 };
 
 // Bring contract crate into namespace
-extern crate dummy;
-use dummy::Dummy;
+extern crate no_std_test;
+use no_std_test::No_std_test;
 
 // Load contracts' bytes.
 near_sdk_sim::lazy_static! {
-  static ref WASM_BYTES: &'static [u8] = include_bytes!("../res/dummy.wasm").as_ref();
+  static ref WASM_BYTES: &'static [u8] = include_bytes!("../res/no_std_test.wasm").as_ref();
 }
 
-/// Deploy the contract(s) and create some dummy accounts. Returns:
-/// - The Dummy Contract
+/// Deploy the contract(s) and create some no_std_test accounts. Returns:
+/// - The No_std_test Contract
 /// - Root Account
 /// - Testnet Account (utility suffix for building other addresses)
 /// - A deployer account address
@@ -31,7 +31,7 @@ fn init(
   initial_balance: u128,
   deploy_to: &str,
 ) -> (
-  ContractAccount<DummyContract>,
+  ContractAccount<No_std_testContract>,
   UserAccount, // root
   UserAccount, // testnet suffix
   UserAccount, // deployer account
@@ -48,16 +48,16 @@ fn init(
   let deployer = testnet.create_user(deploy_to.to_string(), to_yocto("1000000"));
 
   // uses default values for deposit and gas
-  let dummy_contract = deploy!(
-      contract: DummyContract,
-      contract_id: "dummy",
+  let no_std_test_contract = deploy!(
+      contract: No_std_testContract,
+      contract_id: "no_std_test",
       bytes: &WASM_BYTES,
       // User deploying the contract
       signer_account: deployer,
       // init method
       init_method: new()
   );
-  (dummy_contract, root_account, testnet, deployer)
+  (no_std_test_contract, root_account, testnet, deployer)
 }
 
 /// Helper to log ExecutionResult outcome of a call/view
@@ -71,15 +71,15 @@ fn print_helper(res: ExecutionResult) {
 
 #[test]
 fn simtest() {
-  let (dummy_contract, root_account, testnet, deployer) = init(to_yocto("1000"), "me");
+  let (no_std_test_contract, root_account, testnet, deployer) = init(to_yocto("1000"), "me");
 
-  // let view = view!(dummy_contract.MYMETHOD());
+  // let view = view!(no_std_test_contract.MYMETHOD());
   // print_helper(res);
 
   /*
   let res = call!(
     deployer,
-    dummy_contract.MYMETHOD(),
+    no_std_test_contract.MYMETHOD(),
     deposit = STORAGE_AMOUNT // send this amount to a payable function, or exclude this line if send 0
   );
   print_helper(res);
