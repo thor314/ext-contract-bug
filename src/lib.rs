@@ -19,9 +19,6 @@ mod utils;
 static ALLOC: near_sdk::wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 
-// REMOVE THE FOLLOWING LINE TO BUILD SUCCESSFULLY
-#[ext_contract]
-pub trait Ext{}
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]
